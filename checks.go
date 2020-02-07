@@ -13,6 +13,9 @@ func (h HealthCheckFunc) Run() (live, ready bool, status string) {
 type HealthCheckNamespace map[string]HealthCheck
 
 func (h HealthCheckNamespace) Run() (live, ready bool, status interface{}) {
+	if len(h) == 0 {
+		return false, false, "no health checks defined, that is unhealthy"
+	}
 	live = true
 	ready = true
 	multiStatus := map[string]interface{}{}
