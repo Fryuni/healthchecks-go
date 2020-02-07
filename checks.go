@@ -4,9 +4,9 @@ type HealthCheck interface {
 	Run() (live, ready bool, status interface{})
 }
 
-type HealthCheckFunc func() (live, ready bool, status string)
+type HealthCheckFunc func() (live, ready bool, status interface{})
 
-func (h HealthCheckFunc) Run() (live, ready bool, status string) {
+func (h HealthCheckFunc) Run() (live, ready bool, status interface{}) {
 	return h()
 }
 
@@ -32,8 +32,16 @@ func (h HealthCheckNamespace) Register(name string, check HealthCheck) {
 	h[name] = check
 }
 
+func (h HealthCheckNamespace) RegisterFunc(name string, check HealthCheckFunc) {
+	h[name] = check
+}
+
 var rootNamespace = HealthCheckNamespace{}
 
 func Register(name string, check HealthCheck) {
 	rootNamespace.Register(name, check)
+}
+
+func RegisterFunc(name string, check HealthCheckFunc) {
+	rootNamespace.RegisterFunc(name, check)
 }
