@@ -21,26 +21,27 @@ func NewJsonHandler(check HealthCheck) *JsonHandler {
 }
 
 func (h *JsonHandler) Live() http.Handler {
-	return h.handler(func(live, _ bool, status interface{}) (bool, interface{}) {
-		return live, status
+	return h.handler(func(live, _ bool) bool {
+		return live
 	})
 }
 
 func (h *JsonHandler) Ready() http.Handler {
-	return h.handler(func(_, ready bool, status interface{}) (bool, interface{}) {
-		return ready, status
+	return h.handler(func(_, ready bool) bool {
+		return ready
 	})
 }
 
 func (h *JsonHandler) LiveAndReady() http.Handler {
-	return h.handler(func(live, ready bool, status interface{}) (bool, interface{}) {
-		return live && ready, status
+	return h.handler(func(live, ready bool) bool {
+		return live && ready
 	})
 }
 
-func (h *JsonHandler) handler(simplifier func(bool, bool, interface{}) (bool, interface{})) http.Handler {
+func (h *JsonHandler) handler(simplifier func(bool, bool) bool) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ok, message := simplifier(h.check.Run())
+		live, ready, message := h.check.Run()
+		ok := simplifier(live, ready)
 
 		if ok {
 			w.WriteHeader(http.StatusOK)
