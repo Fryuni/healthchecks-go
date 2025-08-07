@@ -37,7 +37,7 @@ func main() {
 	})
 
 	// Run all health checks in the root namespace
-	live, ready, status := healthchecks.rootNamespace.Run()
+	live, ready, status := healthchecks.Run()
 	fmt.Printf("Live: %v, Ready: %v, Status: %v\n", live, ready, status)
 }
 ```
