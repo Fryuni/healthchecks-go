@@ -1,6 +1,6 @@
 # HealthChecks-go
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/Fryuni/healthchecks-go.svg)](https://pkg.go.dev/github.com/Fryuni/healthchecks-go) [![Last Release](https://img.shields.io/badge/last%20release-v1.0.0-blue)](https://pkg.go.dev/github.com/Fryuni/healthchecks-go)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Fryuni/healthchecks-go.svg)](https://pkg.go.dev/github.com/Fryuni/healthchecks-go) [![Last Release](https://img.shields.io/github/v/release/Fryuni/healthchecks-go)](https://github.com/Fryuni/healthchecks-go/releases)
 
 A simple Go library for running health checks across components. The package provides an interface to define health checks, use functions as checks, group checks into namespaces, and aggregate their statuses.
 
